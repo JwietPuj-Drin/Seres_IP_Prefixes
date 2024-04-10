@@ -31,8 +31,8 @@ jobs:
 
     - name: Commit files
       run: |
-        git config --local user.email "jwiet-puj.drin@mail.seres.studio"
-        git config --local user.name "JwietPuj-Drin"
+        git config user.email "jwiet-puj_drin@mail.seres.studio"
+        git config user.name "Jwiet-Puj Drin | 姚妫颍"
         git add .
         git commit -m "Update IP prefixes" || echo "No changes to commit"
 
