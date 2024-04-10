@@ -10,7 +10,7 @@ import os
 }
 
 运营商 = {
-    "chinanet": "电信",
+    # "chinanet": "电信",
     "unicom": "联通", 
     "cmcc": "移动"
 }
