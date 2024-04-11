@@ -10,7 +10,7 @@ import os
 }
 
 运营商 = {
-    # "chinanet": "电信",
+    "chinanet": "电信",
     "unicom": "联通", 
     "cmcc": "移动"
 }
@@ -23,8 +23,8 @@ def 获取前缀(url, name):
         print(f"{name}获取失败。")
         exit()
 
-def 计算交集(前缀一, 前缀二):
-    交集前缀 = []
+def 计算子网(前缀一, 前缀二):
+    子网前缀 = []
     for 前缀甲 in 前缀一:
         网段甲 = IPv4Network(前缀甲)
         for 前缀乙 in 前缀二:
@@ -32,8 +32,8 @@ def 计算交集(前缀一, 前缀二):
             if 网段甲.overlaps(网段乙):
                 intersection = 网段甲.subnet_of(网段乙)
                 if intersection == True:
-                    交集前缀.append(str(网段甲))
-    return 交集前缀
+                    子网前缀.append(str(网段甲))
+    return 子网前缀
 
 def 创建目录(目录):
     if not os.path.exists(目录):
@@ -64,16 +64,16 @@ for 城市代码, 城市名称 in 地方.items():
         if 运营名称 not in 运营商前缀:
             运营商前缀[运营名称] = 运营_IPv4_前缀
 
-        交集前缀 = 计算交集(城市_IPv4_前缀, 运营_IPv4_前缀)
-        IPv4_前缀 = '\n'.join(交集前缀)
+        子网前缀 = 计算子网(城市_IPv4_前缀, 运营_IPv4_前缀)
+        IPv4_前缀 = '\n'.join(子网前缀)
         
         with open(os.path.join(当前路径, "地方与运营商", f"{城市名称}{运营名称}_IPv4_前缀.txt"), "w", encoding='utf-8', newline='') as file:
             file.write(IPv4_前缀)
-        print(f"{城市名称}与{运营名称}的 IPv4 前缀交集已生成为 `./地方与运营商/{城市名称}{运营名称}_IPv4_前缀.txt`")
+        print(f"{城市名称}与{运营名称}的 IPv4 前缀交集子网已生成为 `./地方与运营商/{城市名称}{运营名称}_IPv4_前缀.txt`")
 
         with open(os.path.join(当前路径, "运营商与地方", f"{运营名称}{城市名称}_IPv4_前缀.txt"), "w", encoding='utf-8', newline='') as file:
             file.write(IPv4_前缀)
-        print(f"{运营名称}与{城市名称}的 IPv4 前缀交集已生成为 `./运营商与地方/{运营名称}{城市名称}_IPv4_前缀.txt`")
+        print(f"{运营名称}与{城市名称}的 IPv4 前缀交集子网已生成为 `./运营商与地方/{运营名称}{城市名称}_IPv4_前缀.txt`")
 
 # 生成地方前缀文件
 for 城市名称, 城市前缀 in 地方前缀.items():
